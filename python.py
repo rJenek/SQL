@@ -1,6 +1,6 @@
 import pymysql
 
-print("    Выберите действие");
+print("  Выберите действие");
 print("1.Создать базу данных");
 print("2.Удалить базу данных");
 print("3.Создать таблицу");
@@ -15,12 +15,12 @@ if a == 1:
     name = str(input());
 
 
-    connection = pymysql.connect(db='mydb', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+    connection = pymysql.connect(db='mysql', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
     cursor = connection.cursor();
 
-    create_table_query = "CREATE DATABASE {} VALUE ({})".format(name);
+    create_db_query = "CREATE DATABASE (`name`) VALUES (%s)"
     try:
-        cursor.execute(create_table_query);
+        cursor.execute(create_db_query, (('name')));
         print("База данных была успешно созданна");
     except Exception as e:
         print(e);
@@ -58,7 +58,7 @@ elif a==3:
         connection.close()
 elif a==4:
     print("Напишите название таблицы которую хотите удалить");
-    name = input(chr());
+    name = str(input());
 
     connection = pymysql.connect(db='mydb', user='root', passwd='root',
                                  unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
@@ -73,11 +73,13 @@ elif a==4:
 
         connection.close()
 elif a==5:
-    print("Через пробел напишете название таблицы ");
-    name = input(chr());
+    print("");
+    name = str(input());
 elif a==6:
     print("");
+    name = str(input());
 elif a==7:
     print("");
+    name = str(input());
 else:
     print("Вы ввели неверное число");
