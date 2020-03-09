@@ -13,33 +13,65 @@ a = int(input());
 if a == 1:
     print("Придумайте название базы данных");
     name = str(input());
+
+
     connection = pymysql.connect(db='mydb', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
     cursor = connection.cursor();
 
-    delete_existing_table = "drop table if exists name ";
-    create_table_query = """create table name()""";
-
-
+    create_table_query = "CREATE DATABASE {} VALUE ({})".format(name);
     try:
-        cursor.execute( delete_existing_table );
-        print("Существующая таблица была удаленна")
         cursor.execute(create_table_query);
-        print("Таблица была успешно созданна");
+        print("База данных была успешно созданна");
     except Exception as e:
         print(e);
 
         connection.close()
 elif a==2:
     print("Напишите название базы данных, которую хотите удалить");
-    name = input(chr());
+    name = str(input());
+    connection = pymysql.connect(db='mydb', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+    cursor = connection.cursor();
+
+    create_table_query = "DROP DATABASE {name}";
+    try:
+        cursor.execute(create_table_query);
+        print("База данных была успешно удаленна");
+    except Exception as e:
+        print(e);
+
+        connection.close()
+
 elif a==3:
-    print("сколько");
     print("Напишите название таблицы");
-    print("Напишите название таблицы");
+    name = str(input());
 
+    connection = pymysql.connect(db='mydb', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+    cursor = connection.cursor();
 
+    create_table_query = "CREATE TABLE {name}";
+    try:
+        cursor.execute(create_table_query);
+        print("База данных была успешно удаленна");
+    except Exception as e:
+        print(e);
+
+        connection.close()
 elif a==4:
-    print("");
+    print("Напишите название таблицы которую хотите удалить");
+    name = input(chr());
+
+    connection = pymysql.connect(db='mydb', user='root', passwd='root',
+                                 unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+    cursor = connection.cursor();
+
+    delete_table_query = "DROP TABLE VALUES ('name')"
+    try:
+        cursor.execute(delete_table_query);
+        print("Таблица была успешно удаленна");
+    except Exception as e:
+        print(e);
+
+        connection.close()
 elif a==5:
     print("Через пробел напишете название таблицы ");
     name = input(chr());
