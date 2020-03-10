@@ -18,9 +18,9 @@ if a == 1:
     connection = pymysql.connect(db='mysql', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
     cursor = connection.cursor();
 
-    create_db_query = "CREATE DATABASE (`name`) VALUES (%s)"
+    create_db_query = "CREATE DATABASE (`name`) VALUES ({})"
     try:
-        cursor.execute(create_db_query, (('name')));
+        cursor.execute(create_db_query.format(name));
         print("База данных была успешно созданна");
     except Exception as e:
         print(e);
@@ -32,9 +32,9 @@ elif a==2:
     connection = pymysql.connect(db='mydb', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
     cursor = connection.cursor();
 
-    create_table_query = "DROP DATABASE {name}";
+    create_table_query = "DROP DATABASE ('name') VALUES (%s) ";
     try:
-        cursor.execute(create_table_query);
+        cursor.execute(create_table_query, );
         print("База данных была успешно удаленна");
     except Exception as e:
         print(e);
