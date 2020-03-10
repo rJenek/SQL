@@ -3,17 +3,17 @@ import pymysql
 connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
 cursor = connection.cursor()
 
-print("  Выберите действие")
-print("1.Создать базу данных")
-print("2.Удалить базу данных")
-print("3.Создать таблицу")
-print("4.Удалить таблицу")
-print("5.Внести данные в таблицу")
-print("6.Импортировать данные из таблицы")
-print("7.Вывести количество записий в таблице")
+print("""  Выберите действие
+1.Создать базу данных
+2.Удалить базу данных
+3.Создать таблицу
+4.Удалить таблицу
+5.Внести данные в таблицу
+6.Импортировать данные из таблицы
+7.Вывести количество записий в таблице """)
 a = int(input())
 
-if a == 1:
+def create_db():
     print("Придумайте название базы данных")
     name = str(input())
 
@@ -25,7 +25,7 @@ if a == 1:
         print(e)
 
         connection.close()
-elif a==2:
+def drop_db():
     print("Напишите название базы данных, которую хотите удалить")
     name = str(input())
 
@@ -38,7 +38,7 @@ elif a==2:
 
         connection.close()
 
-elif a==3:
+def create_table():
     print("Напишите название таблицы")
     name = str(input())
     print("Напишите название нашей новой колонки")
@@ -55,7 +55,7 @@ elif a==3:
         print(e);
 
         connection.close()
-elif a==4:
+def drop_table():
     print("Напишите название таблицы которую хотите удалить")
     name = str(input())
 
@@ -68,14 +68,14 @@ elif a==4:
         print(e)
 
         connection.close()
-elif a==5:
+def change_table():
     print("Напишите название таблицы в которую вы хотите внести изменения")
     name = str(input())
     print("Напишите название колонки в которую вы хотите внести изменения")
     name_col = str(input())
     print("Напишите название таблицы в которую вы хотите внести изменения")
     name = str(input())
-elif a==6:
+def import_table():
     print("Напишите название таблицы")
     name = str(input())
     print("Напишите название колонки которую вы хотите ипмортировать ")
@@ -96,10 +96,10 @@ elif a==6:
             print(row)
 
     else:
-        
 
 
-        import_table_query = "SELECT * FROM " + name
+
+        import_table_query = "SELECT  FROM " + name
         try:
             cursor.execute(import_table_query)
             print("Данные успешно импортированны")
@@ -109,8 +109,7 @@ elif a==6:
             connection.close()
 
 
-elif a==7:
+def count():
     print("");
     name = str(input());
-else:
-    print("Вы ввели неверное число");
+
