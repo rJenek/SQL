@@ -1,5 +1,7 @@
 import pymysql
 
+connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+cursor = connection.cursor()
 
 print("  Выберите действие")
 print("1.Создать базу данных")
@@ -15,10 +17,6 @@ if a == 1:
     print("Придумайте название базы данных")
     name = str(input())
 
-
-    connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
-    cursor = connection.cursor()
-
     create_db_query = "CREATE DATABASE " + name
     try:
         cursor.execute(create_db_query)
@@ -30,8 +28,6 @@ if a == 1:
 elif a==2:
     print("Напишите название базы данных, которую хотите удалить")
     name = str(input())
-    connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
-    cursor = connection.cursor()
 
     drop_db_query = "DROP DATABASE " + name
     try:
@@ -51,14 +47,10 @@ elif a==3:
     int_col = str(input())
 
 
-
-    connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
-    cursor = connection.cursor()
-
     create_table_query = "CREATE TABLE " + name + "(" + name_col + " " + int_col + ")"
     try:
         cursor.execute(create_table_query)
-        print("Таблица была успешно удаленна")
+        print("Таблица была успешно созданно")
     except Exception as e:
         print(e);
 
@@ -67,8 +59,6 @@ elif a==4:
     print("Напишите название таблицы которую хотите удалить")
     name = str(input())
 
-    connection = pymysql.connect(db='lesson', user='root', passwd='root',  unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
-    cursor = connection.cursor()
 
     drop_table_query = "DROP TABLE " + name
     try:
@@ -92,8 +82,6 @@ elif a==6:
     print("Если хотите импортировать все данные напишите all")
     name_col = str(input())
     if name_col == 'all':
-        connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
-        cursor = connection.cursor()
 
         import_table_query = "SELECT * FROM " + name
         try:
@@ -104,24 +92,21 @@ elif a==6:
 
             connection.close()
 
-        rows = cursor.execute(import_table_query)
-        for row in rows:
-            print
-            row
+        for row in cursor.fetchall():
+            print(row)
 
-        else:
-            connection = pymysql.connect(db='lesson', user='root', passwd='root',
-                                         unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
-            cursor = connection.cursor()
+    else:
+        
 
-            import_table_query = "SELECT * FROM " + name
-            try:
-                cursor.execute(import_table_query)
-                print("Данные успешно импортированны")
-            except Exception as e:
-                print(e)
 
-                connection.close()
+        import_table_query = "SELECT * FROM " + name
+        try:
+            cursor.execute(import_table_query)
+            print("Данные успешно импортированны")
+        except Exception as e:
+            print(e)
+
+            connection.close()
 
 
 elif a==7:
