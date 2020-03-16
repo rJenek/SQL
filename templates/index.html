@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="utf-8">
+  <title>Egor Top teacher </title>
+ </head>
+ <body>
+ </body>
+ <form action="" method="post">
+     <a href="{{ url_for('CreateDB') }}" class="button21">Создать базу данных</a>
+     <a href="{{ url_for('DeleteDB') }}" class="button21">Удалить базу данных</a>
+     <a href="{{ url_for('CreateTB') }}" class="button21">Создать таблицу</a>
+     <a href="{{ url_for('DeleteTB') }}" class="button21">Удалить таблицу</a>
+     <a href="{{ url_for('ChangeTB') }}" class="button21">Внести данные в таблицу</a>
+     <a href="{{ url_for('SelectTB') }}" class="button21">Импортировать данные из таблицы</a>
+ </form>
+</html>

@@ -1,19 +1,20 @@
 import pymysql
+from flask import Flask, render_template
 
-connection = pymysql.connect(db='lesson', user='root', passwd='root', unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+connection = pymysql.connect(db='lesson', user='root', passwd='root',
+                             unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
 cursor = connection.cursor()
 
-print("""  Выберите действие
-1.Создать базу данных
-2.Удалить базу данных
-3.Создать таблицу
-4.Удалить таблицу
-5.Внести данные в таблицу
-6.Импортировать данные из таблицы
-7.Вывести количество записий в таблице """)
-a = int(input())
+app = Flask(__name__)
 
-def create_db():
+
+@app.route("/", methods=('GET', 'POST'))
+def index():
+    return render_template('index.html')
+
+
+@app.route("/CreateDB", methods=('GET', 'POST'))
+def CreateDB():
     print("Придумайте название базы данных")
     name = str(input())
 
@@ -25,7 +26,11 @@ def create_db():
         print(e)
 
         connection.close()
-def drop_db():
+    return render_template('index.html')
+
+
+@app.route("/DeleteDB", methods=('GET', 'POST'))
+def DeleteDB():
     print("Напишите название базы данных, которую хотите удалить")
     name = str(input())
 
@@ -37,15 +42,17 @@ def drop_db():
         print(e)
 
         connection.close()
+    return render_template('index.html')
 
-def create_table():
+
+@app.route("/CreateTB", methods=('GET', 'POST'))
+def CreateTB():
     print("Напишите название таблицы")
     name = str(input())
     print("Напишите название нашей новой колонки")
     name_col = str(input())
     print("Напишите тип данных Например VARCHAR (20)")
     int_col = str(input())
-
 
     create_table_query = "CREATE TABLE " + name + "(" + name_col + " " + int_col + ")"
     try:
@@ -55,10 +62,13 @@ def create_table():
         print(e);
 
         connection.close()
-def drop_table():
+    return render_template('index.html')
+
+
+@app.route("/DeleteTB", methods=('GET', 'POST'))
+def DeleteTB():
     print("Напишите название таблицы которую хотите удалить")
     name = str(input())
-
 
     drop_table_query = "DROP TABLE " + name
     try:
@@ -68,14 +78,21 @@ def drop_table():
         print(e)
 
         connection.close()
-def change_table():
+    return render_template('index.html')
+
+
+@app.route("/ChangeTB", methods=('GET', 'POST'))
+def ChangeTB():
     print("Напишите название таблицы в которую вы хотите внести изменения")
     name = str(input())
     print("Напишите название колонки в которую вы хотите внести изменения")
     name_col = str(input())
     print("Напишите название таблицы в которую вы хотите внести изменения")
     name = str(input())
-def import_table():
+
+
+@app.route("/SelectTB", methods=('GET', 'POST'))
+def SelectTB():
     print("Напишите название таблицы")
     name = str(input())
     print("Напишите название колонки которую вы хотите ипмортировать ")
@@ -97,8 +114,6 @@ def import_table():
 
     else:
 
-
-
         import_table_query = "SELECT  FROM " + name
         try:
             cursor.execute(import_table_query)
@@ -109,7 +124,5 @@ def import_table():
             connection.close()
 
 
-def count():
-    print("");
-    name = str(input());
-
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=4567)
