@@ -37,7 +37,7 @@ def DeleteDB():
     drop_db_query = "DROP DATABASE " + name
     try:
         cursor.execute(drop_db_query)
-        print("База данных была успешно удаленна");
+        print("База данных была успешно удаленна")
     except Exception as e:
         print(e)
 
@@ -59,7 +59,7 @@ def CreateTB():
         cursor.execute(create_table_query)
         print("Таблица была успешно созданно")
     except Exception as e:
-        print(e);
+        print(e)
 
         connection.close()
     return render_template('index.html')
@@ -78,28 +78,60 @@ def DeleteTB():
         print(e)
 
         connection.close()
-    return render_template('index.html')
+    return render_template("index.html")
 
 
 @app.route("/ChangeTB", methods=('GET', 'POST'))
 def ChangeTB():
-    print("Напишите название таблицы в которую вы хотите внести изменения")
-    name = str(input())
-    print("Напишите название колонки в которую вы хотите внести изменения")
-    name_col = str(input())
-    print("Напишите название таблицы в которую вы хотите внести изменения")
-    name = str(input())
+    print("""Выберите действие:
+    1.Добавить колонку
+    2.Внести данные в колонку""")
+    num = int(input())
+    if num == 2:
+        print("Напишите название таблицы в которую вы хотите внести изменения")
+        name = str(input())
+        print("Напишите название колонки куда вы хотите сделать запись")
+        name_col = str(input())
+        print("Сделайте запись в колонку")
+        int_col = str(input())
+        change_col_query = "INSERT INTO " + name + " (`" + name_col + "`) VALUES('" + int_col + "');"
+        try:
+            cursor.execute(change_col_query)
+            print("Таблица была успешно изменена")
+            print(change_col_query)
+        except Exception as e:
+            print(e)
+
+            connection.close()
+
+    else:
+        print("Напишите название таблицы")
+        name = str(input())
+        print("Напишите название нашей новой колонки")
+        name_col = str(input())
+        print("Напишите тип данных. Например VARCHAR(20)")
+        int_col = str(input())
+        add_col_query = "ALTER TABLE " + name + " ADD COLUMN " + name_col + " " + int_col
+        try:
+            cursor.execute(add_col_query)
+            print("Колонка успешно добавлена")
+        except Exception as e:
+            print(e)
+
+            connection.close()
+
+    return render_template('index.html')
 
 
 @app.route("/SelectTB", methods=('GET', 'POST'))
 def SelectTB():
-    print("Напишите название таблицы")
-    name = str(input())
-    print("Напишите название колонки которую вы хотите ипмортировать ")
-    print("Если хотите импортировать все данные напишите all")
-    name_col = str(input())
-    if name_col == 'all':
-
+    print("""Выберите действие:
+        1.Импорт всех данных из тиблицы
+        2.Количество записей в таблице""")
+    num = int(input())
+    if num == 1:
+        print("Напишите название таблицы")
+        name = str(input())
         import_table_query = "SELECT * FROM " + name
         try:
             cursor.execute(import_table_query)
@@ -111,10 +143,10 @@ def SelectTB():
 
         for row in cursor.fetchall():
             print(row)
-
     else:
-
-        import_table_query = "SELECT  FROM " + name
+        print("Напишите название таблицы")
+        name = str(input())
+        import_table_query = "SELECT COUNT(*) FROM " + name
         try:
             cursor.execute(import_table_query)
             print("Данные успешно импортированны")
@@ -122,6 +154,13 @@ def SelectTB():
             print(e)
 
             connection.close()
+
+        for row in cursor.fetchall():
+            print(row)
+    return render_template('index.html')
+
+
+
 
 
 if __name__ == "__main__":
