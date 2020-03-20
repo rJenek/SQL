@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 import pymysql
 from flask import Flask, render_template, redirect, url_for, request
 
 connection = pymysql.connect(db='lesson', user='root', passwd='root',
-                             unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+                              unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+
 cursor = connection.cursor()
 
 app = Flask(__name__)
@@ -13,14 +15,10 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/CreateDB")
-def input_create_db():
-
-    return render_template('input_data.html', text='Придумайте название базы данных')
-
-
 @app.route("/CreateDB", methods=('GET', 'POST'))
 def create_db():
+    if request.method == 'GET':
+        return render_template('input_data.html', text='Придумайте название базы данных')
     if request.method == 'POST':
         name = request.form['name']
 
@@ -35,14 +33,11 @@ def create_db():
         return redirect(url_for('index'))
 
 
-@app.route("/DeleteDB")
-def input_delete_db():
-
-    return render_template('input_data.html', text='Напишите название базы данных, которую хотите удалить')
-
-
 @app.route("/DeleteDB", methods=('GET', 'POST'))
 def delete_db():
+    if request.method == 'GET':
+        return render_template('input_data.html', text='Напишите название базы данных, которую хотите удалить')
+
     if request.method == 'POST':
         name = request.form['name']
 
@@ -57,17 +52,14 @@ def delete_db():
         return redirect(url_for('index'))
 
 
-@app.route("/CreateTB")
-def input_create_tb():
-
-    return render_template('input_data3.html',
+@app.route("/CreateTB", methods=('GET', 'POST'))
+def create_tb():
+    if request.method == 'GET':
+        return render_template('input_data3.html',
                            text1='Напишите название таблицы ',
                            text2='Напишите название нашей новой колонки ',
                            text3='Напишите тип данных Например VARCHAR (20) ')
 
-
-@app.route("/CreateTB", methods=('GET', 'POST'))
-def create_tb():
     if request.method == 'POST':
         # print("Напишите название таблицы")
         name = request.form['name']
@@ -87,14 +79,11 @@ def create_tb():
         return redirect(url_for('index'))
 
 
-@app.route("/DeleteTB")
-def input_delete_tb():
-
-    return render_template('input_data.html', text='Напишите название таблицы которую хотите удалить')
-
-
 @app.route("/DeleteTB", methods=('GET', 'POST'))
 def delete_tb():
+    if request.method == 'GET':
+        return render_template('input_data.html', text='Напишите название таблицы которую хотите удалить')
+
     if request.method == 'POST':
         # print("Напишите название таблицы которую хотите удалить")
         name = request.form['name']
@@ -115,17 +104,14 @@ def change_tb():
     return render_template('input_change.html')
 
 
-@app.route("/ChangeTB/Edit")
-def input_edit():
-
-    return render_template('input_data3.html',
-                           text1='Напишите название таблицы в которую вы хотите внести изменения ',
-                           text2='Напишите название колонки куда вы хотите сделать запись ',
-                           text3='Сделайте запись в колонку ')
-
-
 @app.route("/ChangeTB/Edit", methods=('GET', 'POST'))
 def edit_tb():
+    if request.method == 'GET':
+        return render_template('input_data3.html',
+                               text1='Напишите название таблицы в которую вы хотите внести изменения ',
+                               text2='Напишите название колонки куда вы хотите сделать запись ',
+                               text3='Сделайте запись в колонку ')
+
     if request.method == 'POST':
         # print("Напишите название таблицы в которую вы хотите внести изменения")
         name = request.form['name']
@@ -145,17 +131,14 @@ def edit_tb():
         return redirect(url_for("index"))
 
 
-@app.route("/ChangeTB/Add")
-def input_add():
-
-    return render_template('input_data3.html',
-                           text1='Напишите название таблицы ',
-                           text2='Напишите название нашей новой колонки ',
-                           text3='Напишите тип данных. Например VARCHAR(20) ')
-
-
 @app.route("/ChangeTB/Add", methods=('GET', 'POST'))
 def add_col():
+    if request.method == 'GET':
+        return render_template('input_data3.html',
+                               text1='Напишите название таблицы ',
+                               text2='Напишите название нашей новой колонки ',
+                               text3='Напишите тип данных. Например VARCHAR(20) ')
+
     if request.method == 'POST':
         # print("Напишите название таблицы")
         name = request.form['name']
@@ -179,14 +162,11 @@ def select_tb():
     return render_template('input_select.html')
 
 
-@app.route("/SelectTB/Select_all")
-def input_select_all():
-
-    return render_template('input_data.html', text='Напишите название таблицы')
-
-
 @app.route("/SelectTB/Select_all", methods=('GET', 'POST'))
 def select_all():
+    if request.method == 'GET':
+        return render_template('input_data.html', text='Напишите название таблицы')
+
     if request.method == 'POST':
         # print("Напишите название таблицы")
         name = request.form['name']
@@ -208,14 +188,11 @@ def select_all():
         # return redirect(url_for("index"))
 
 
-@app.route("/SelectTB/count")
-def input_count():
-
-    return render_template('input_data.html', text='Напишите название таблицы')
-
-
 @app.route("/SelectTB/count", methods=('GET', 'POST'))
 def count():
+    if request.method == 'GET':
+        return render_template('input_data.html', text='Напишите название таблицы')
+
     if request.method == 'POST':
         # print("Напишите название таблицы")
         name = request.form['name']
