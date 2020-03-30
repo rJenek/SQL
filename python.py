@@ -2,8 +2,12 @@
 import pymysql
 from flask import Flask, render_template, redirect, url_for, request
 
-connection = pymysql.connect(db='lesson', user='root', passwd='root',
-                              unix_socket="/Applications/MAMP/tmp/mysql/mysql.sock")
+connection = pymysql.connect(host='localhost',
+                               user='root',
+                               password='280801EiO',
+                               db='mydb',
+                               charset='utf8mb4',
+                               cursorclass=pymysql.cursors.DictCursor)
 
 cursor = connection.cursor()
 
